@@ -1,80 +1,134 @@
-<!--lang: java-->
-####效果如图：
 
-![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item_animation.gif)
+RecyclerView Animation
+===============
 
-</br>
-
-我的博客：[详解](https://ruzhan123.github.io/2016/07/01/2016-07-01-01-%E5%AF%B9RecyclerViewItem%E5%81%9A%E5%8A%A8%E7%94%BB/)
+A grace let recycleriew holder add animation.
 
 
+-----
 
-RecyclerView Item Animation --- 为Item添加动态位移，静态位移，缩放等动画，保证了动画状态的平滑衔接。
 
----
-
-RecyclerView，ListView这些具有Item复用性的View，想要对其Item做动画，需要注意以下几点：
+![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item01.gif)
+![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item01.gif)
 
 
 
-1，如果要一点击，让所有Item做动画的效果。例如，上图的编辑和取消，这样的动态动画。
 
-可以对所有ViewHolder中的View直接做动画。但是需要在onBindViewHolder方法中对复用的item做静态动画，保证动画状态的平滑衔接。
-
+RecyclerView Animation use **Animation** **onAnimationUpdate** let recyclerview holder do animation, use **SlideAnimationHelper** control open animation and close animation.
 
 
-2，处理每一个Item的特有属性，例如，上图checkbox的选中状态，都需要把状态字段放到对应的Java bean中，
-并在onBindViewHolder方法从java bean取出状态值，设置到view里。
 
-</br>
+Usage
+-----
 
-部分参考代码：
+1. create holder add to holder list 
 
 ```java
 
-	//对所有ViewHolder中的View直接做动画
-    public static final int NORMAL = 1000;
-    public static final int SLIDE = 2000;
-    private int mState = NORMAL;
-	private List<SlideViewHolder> mSlideViewHolders = new ArrayList<>();
+	private List<OneSlideViewHolder> mOneSlideViewHolders = new ArrayList<>();
+	
+	@Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	
+	OneSlideViewHolder oneSlideViewHolder = new OneSlideViewHolder(
+	    LayoutInflater.from(parent.getContext()).inflate(R.layout.one_item, parent, false));
+	
+	//add holder to list
+	mOneSlideViewHolders.add(oneSlideViewHolder);
+	
+	return oneSlideViewHolder;
+	}
+```
+
+2. call open or close animation
+
+```java
 
 	public void openItemAnimation() {
-       mState = SLIDE;
-       for (SlideViewHolder holder : mSlideViewHolders) {
-           holder.openItemAnimation();
-       }
-    }
-
-    public void closeItemAnimation() {
-        mState = NORMAL;
-        for (SlideViewHolder holder : mSlideViewHolders) {
-            holder.closeItemAnimation();
-        }
-    }
-
+	for (OneSlideViewHolder holder : mOneSlideViewHolders) {
+	  holder.openItemAnimation();
+	}
+	}
+	
+	public void closeItemAnimation() {
+	for (OneSlideViewHolder holder : mOneSlideViewHolders) {
+	  holder.closeItemAnimation();
+	}
+	}
+```
 
 
-	//需要在onBindViewHolder方法中对复用的item做静态动画，保证动画状态的平滑衔接
-    public void bind(ItemBean itemBean) {
-   	    mItemBean = itemBean;
+3. in holder
 
-       //在onBindViewHolder方法从java bean取出状态值，设置到view里
-        mCheckBox.setChecked(itemBean.isChecked());
+```java
 
-        switch (mState) {
-          case NORMAL:
-             mSlideRelativeLayout.close();
-             break;
-
-          case SLIDE:
-             mSlideRelativeLayout.open();
-             break;
-    }
-     }
-
-
+	public void openItemAnimation() {
+	if (mOpenUpdateListener == null) {
+	  mOpenUpdateListener = new OpenUpdateListener();
+	}
+	mSlideAnimationHelper.openAnimation(DURATION_OPEN, mOpenUpdateListener);
+	}
+	
+	public void closeItemAnimation() {
+	if (mCloseUpdateListener == null) {
+	  mCloseUpdateListener = new CloseUpdateListener();
+	}
+	mSlideAnimationHelper.closeAnimation(DURATION_CLOSE, mCloseUpdateListener);
+	}
+	
+	public void bind() {
+	//keep refresh one_item is change state
+	switch (mSlideAnimationHelper.getState()) {
+	  case SlideAnimationHelper.STATE_CLOSE:
+	    mContentRl.scrollTo(0, 0);
+	    break;
+	
+	  case SlideAnimationHelper.STATE_OPEN:
+	    mContentRl.scrollTo(-mOffset, 0);
+	    break;
+	}
+	}
+	
+	private void doAnimationSet(int x, float fraction) {
+	mContentRl.scrollTo(x, 0);
+	mCheckBox.setScaleX(fraction);
+	mCheckBox.setScaleY(fraction);
+	mCheckBox.setAlpha(fraction * 255);
+	}
+	
+	private class OpenUpdateListener implements ValueAnimator.AnimatorUpdateListener {
+	
+	@Override public void onAnimationUpdate(ValueAnimator animation) {
+	  float fraction = animation.getAnimatedFraction();
+	  int endX = (int) (-mOffset * fraction);
+	  doAnimationSet(endX, fraction);
+	}
+	}
+	
+	private class CloseUpdateListener implements ValueAnimator.AnimatorUpdateListener {
+	
+	@Override public void onAnimationUpdate(ValueAnimator animation) {
+	  float fraction = animation.getAnimatedFraction();
+	  int endX = (int) (-mOffset * (1 - fraction));
+	  doAnimationSet(endX, (1 - fraction));
+	}
+	}
 ```
 
 
 
+License
+-------
 
+    Copyright 2017 ruzhan
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
