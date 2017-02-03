@@ -9,12 +9,12 @@ A grace let recycleriew holder add animation.
 
 
 ![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item01.gif)
-![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item01.gif)
+![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item02.gif)
 
 
 
 
-RecyclerView Animation use **Animation** **onAnimationUpdate** let recyclerview holder do animation, use **SlideAnimationHelper** control open animation and close animation.
+RecyclerView Animation use **Animation** and **onAnimationUpdate**, let recyclerview holder do animation, use **SlideAnimationHelper** control open animation and close animation.
 
 
 
@@ -115,6 +115,60 @@ Usage
 ```
 
 
+SlideAnimationHelper
+-----
+
+```java
+
+	public class SlideAnimationHelper implements View.OnAttachStateChangeListener {
+	
+	public static final int STATE_CLOSE = 20000;
+	public static final int STATE_OPEN = 30000;
+	
+	private static int mCurrentState = STATE_CLOSE;
+	
+	private ValueAnimator mValueAnimator;
+	
+	public SlideAnimationHelper(View view) {
+	view.addOnAttachStateChangeListener(this);
+	}
+
+	...
+
+	public ValueAnimator getAnimation() {
+	if (mValueAnimator == null) {
+	  mValueAnimator = new ValueAnimator();
+	  mValueAnimator.setFloatValues(0.0f, 1.0f);
+	}
+	return mValueAnimator;
+	}
+	
+	public void openAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
+	  Animator.AnimatorListener listener, float... values) {
+	mCurrentState = STATE_OPEN;
+	setValueAnimator(duration, animatorUpdateListener, listener, values);
+	}
+	
+	public void closeAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
+	  Animator.AnimatorListener listener, float... values) {
+	mCurrentState = STATE_CLOSE;
+	setValueAnimator(duration, animatorUpdateListener, listener, values);
+	}
+
+	...
+
+	@Override public void onViewAttachedToWindow(View v) {
+	
+	}
+	
+	@Override public void onViewDetachedFromWindow(View v) {
+	
+	//view detach window cancel animation
+	if (mValueAnimator != null) {
+	  mValueAnimator.cancel();
+	}
+	}
+```
 
 License
 -------
