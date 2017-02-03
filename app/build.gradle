@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.0"
 
     defaultConfig {
-        applicationId "com.pioneers.recyclerviewitemanimation"
+        applicationId "com.ruzhan.recyclerviewitemanimation"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_root"
+    android:layout_width="match_parent"
+    android:layout_height="65dp">
+
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="match_parent">
+
+        <CheckBox
+            android:id="@+id/item_checkbox"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_checkbox"
+            android:clickable="false"
+            android:enabled="false"
+            android:focusable="false" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/item_content_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/item_icon_v"
+            android:background="#0000ff"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/item_icon_v"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Title"
+                android:textColor="#2c3e50"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/item_subtitle_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="sub_title"
+                android:textColor="#7f2c3e50"
+                android:textSize="11dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
