@@ -2,26 +2,26 @@
 RecyclerView Animation
 ===============
 
-A grace let recycleriew holder add animation.
+A grace let recycleriew holder add animation
 
 
 -----
 
 
-![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item01.gif)
+![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item01.gif) 
 ![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item02.gif)
 
 
 
 
-RecyclerView Animation use **Animation** and **onAnimationUpdate**, let recyclerview holder do animation, use **SlideAnimationHelper** control open animation and close animation.
+RecyclerView Animation use **Animation** and **onAnimationUpdate**, let recyclerview holder do animation, **SlideAnimationHelper** control open animation and close animation.
 
 
 
 Usage
 -----
 
-1. create holder add to holder list 
+1, create holder add to holder list 
 
 ```java
 
@@ -39,7 +39,7 @@ Usage
 	}
 ```
 
-2. call open or close animation
+2, call open or close animation
 
 ```java
 
@@ -57,7 +57,7 @@ Usage
 ```
 
 
-3. in holder
+3, in holder
 
 ```java
 
