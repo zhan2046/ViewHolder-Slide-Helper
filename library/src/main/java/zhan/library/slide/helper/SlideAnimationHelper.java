@@ -1,16 +1,15 @@
-package com.ruzhan.recyclerviewitemanimation.helper;
+package zhan.library.slide.helper;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
-import android.view.View;
 
 /**
  * Created by zhan on 2017/2/3.
  */
 
-public class SlideAnimationHelper implements View.OnAttachStateChangeListener {
+public class SlideAnimationHelper {
 
   public static final int STATE_CLOSE = 20000;
   public static final int STATE_OPEN = 30000;
@@ -19,8 +18,8 @@ public class SlideAnimationHelper implements View.OnAttachStateChangeListener {
 
   private ValueAnimator mValueAnimator;
 
-  public SlideAnimationHelper(View view) {
-    view.addOnAttachStateChangeListener(this);
+  public SlideAnimationHelper() {
+
   }
 
   public int getState() {
@@ -118,17 +117,5 @@ public class SlideAnimationHelper implements View.OnAttachStateChangeListener {
 
   public static int getOffset(Context context, int offset) {
     return (int) (context.getResources().getDisplayMetrics().density * offset + 0.5f);
-  }
-
-  @Override public void onViewAttachedToWindow(View v) {
-
-  }
-
-  @Override public void onViewDetachedFromWindow(View v) {
-
-    //view detach window cancel animation
-    if (mValueAnimator != null) {
-      mValueAnimator.cancel();
-    }
   }
 }

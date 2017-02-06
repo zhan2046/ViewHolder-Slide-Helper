@@ -3,53 +3,82 @@
     android:id="@+id/item_root"
     android:layout_width="match_parent"
     android:layout_height="65dp"
-    android:background="#F5F5F5"
     android:layout_marginBottom="1dp"
     android:layout_marginTop="1dp"
+    android:background="#F5F5F5"
     >
 
   <LinearLayout
       android:id="@+id/content_ll"
-      android:layout_width="100dp"
+      android:layout_width="150dp"
       android:layout_height="match_parent"
       android:orientation="horizontal"
       >
 
-    <TextView
+    <FrameLayout
         android:layout_width="0dp"
-        android:layout_marginRight="1dp"
         android:layout_height="match_parent"
+        android:layout_marginRight="1dp"
         android:layout_weight="1"
         android:background="#66ff0000"
-        android:gravity="center"
-        android:text="RED"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        />
+        >
+      <TextView
+          android:id="@+id/item_red_tv"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginRight="1dp"
+          android:gravity="center"
+          android:text="RED"
+          android:textColor="#333333"
+          android:textSize="16sp"
+          />
 
-    <TextView
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="0dp"
-        android:layout_marginLeft="1dp"
         android:layout_height="match_parent"
+        android:layout_marginRight="1dp"
         android:layout_weight="1"
         android:background="#660000ff"
-        android:gravity="center"
-        android:text="BULE"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        />
+        >
+      <TextView
+          android:id="@+id/item_blue_tv"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="1dp"
+
+          android:gravity="center"
+          android:text="BULE"
+          android:textColor="#333333"
+          android:textSize="16sp"
+          />
+    </FrameLayout>
+
+
   </LinearLayout>
 
 
   <TextView
-      android:textSize="14sp"
-      android:layout_centerVertical="true"
-      android:textColor="#333333"
-      android:text="Title"
-      android:padding="15dp"
-      android:layout_alignParentRight="true"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:padding="15dp"
+      android:text="Title"
+      android:textColor="#333333"
+      android:textSize="14sp"
+      />
+
+  <TextView
+      android:id="@+id/hello_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+     android:layout_centerInParent="true"
+      android:padding="15dp"
+      android:text="Hello"
+      android:textColor="#333333"
+      android:textSize="16sp"
       />
 
 

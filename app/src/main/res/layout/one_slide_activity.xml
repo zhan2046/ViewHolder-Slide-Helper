@@ -14,7 +14,7 @@
             android:textSize="16sp"
             android:textColor="#333333"
             android:layout_centerInParent="true"
-            android:text="Item_Animation"
+            android:text="ViewHolder-Slide-Helper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -27,7 +27,7 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:padding="15dp"
-            android:text="关闭中" />
+            android:text="CLOSE" />
 
         <View
             android:layout_width="match_parent"

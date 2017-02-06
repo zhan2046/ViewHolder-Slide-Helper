@@ -4,9 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.ruzhan.recyclerviewitemanimation.R;
-import com.ruzhan.recyclerviewitemanimation.holder.OneSlideViewHolder;
 import com.ruzhan.recyclerviewitemanimation.holder.TwoSlideViewHolder;
-import java.util.ArrayList;
+import zhan.library.slide.ISlideHelper;
 import java.util.List;
 
 /**
@@ -15,23 +14,20 @@ import java.util.List;
 public class TwoSlideAdapter extends RecyclerView.Adapter {
 
   private List<String> mData;
-  private List<TwoSlideViewHolder> mTwoSlideViewHolders = new ArrayList<>();
+
+  private ISlideHelper mISlideHelper = new ISlideHelper();
 
   public void setData(List<String> data) {
     mData = data;
     notifyDataSetChanged();
   }
 
-  public void openItemAnimation() {
-    for (TwoSlideViewHolder holder : mTwoSlideViewHolders) {
-      holder.openItemAnimation();
-    }
+  public void slideOpen() {
+    mISlideHelper.slideOpen();
   }
 
-  public void closeItemAnimation() {
-    for (TwoSlideViewHolder holder : mTwoSlideViewHolders) {
-      holder.closeItemAnimation();
-    }
+  public void slideClose() {
+    mISlideHelper.slideClose();
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,8 +35,8 @@ public class TwoSlideAdapter extends RecyclerView.Adapter {
     TwoSlideViewHolder twoSlideViewHolder = new TwoSlideViewHolder(
         LayoutInflater.from(parent.getContext()).inflate(R.layout.two_item, parent, false));
 
-    //add holder to list
-    mTwoSlideViewHolders.add(twoSlideViewHolder);
+    //add holder
+    mISlideHelper.add(twoSlideViewHolder);
 
     return twoSlideViewHolder;
   }

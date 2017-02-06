@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.ruzhan.recyclerviewitemanimation.R;
 import com.ruzhan.recyclerviewitemanimation.holder.OneSlideViewHolder;
-import java.util.ArrayList;
+import zhan.library.slide.ISlideHelper;
 import java.util.List;
 
 /**
@@ -14,23 +14,20 @@ import java.util.List;
 public class OneSlideAdapter extends RecyclerView.Adapter {
 
   private List<String> mData;
-  private List<OneSlideViewHolder> mOneSlideViewHolders = new ArrayList<>();
+
+  private ISlideHelper mISlideHelper = new ISlideHelper();
 
   public void setData(List<String> data) {
     mData = data;
     notifyDataSetChanged();
   }
 
-  public void openItemAnimation() {
-    for (OneSlideViewHolder holder : mOneSlideViewHolders) {
-      holder.openItemAnimation();
-    }
+  public void slideOpen() {
+    mISlideHelper.slideOpen();
   }
 
-  public void closeItemAnimation() {
-    for (OneSlideViewHolder holder : mOneSlideViewHolders) {
-      holder.closeItemAnimation();
-    }
+  public void slideClose() {
+    mISlideHelper.slideClose();
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,8 +35,8 @@ public class OneSlideAdapter extends RecyclerView.Adapter {
     OneSlideViewHolder oneSlideViewHolder = new OneSlideViewHolder(
         LayoutInflater.from(parent.getContext()).inflate(R.layout.one_item, parent, false));
 
-    //add holder to list
-    mOneSlideViewHolders.add(oneSlideViewHolder);
+    //add holder
+    mISlideHelper.add(oneSlideViewHolder);
 
     return oneSlideViewHolder;
   }

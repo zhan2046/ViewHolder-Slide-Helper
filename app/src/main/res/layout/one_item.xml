@@ -9,16 +9,16 @@
         android:layout_width="50dp"
         android:layout_height="match_parent">
 
-        <CheckBox
-            android:id="@+id/item_checkbox"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:button="@drawable/selector_checkbox"
-            android:clickable="false"
-            android:enabled="false"
-            android:focusable="false" />
+        <TextView
+            android:id="@+id/item_tv"
+            android:text="Hello"
+            android:textSize="13sp"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_height="match_parent"
+            />
     </FrameLayout>
 
     <RelativeLayout
@@ -35,7 +35,8 @@
             android:layout_marginLeft="10dp"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/title_ll"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
@@ -57,7 +58,7 @@
                 android:id="@+id/item_subtitle_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="11dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="sub_title"

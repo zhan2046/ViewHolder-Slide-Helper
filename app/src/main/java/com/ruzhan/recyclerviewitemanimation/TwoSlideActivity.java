@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import com.ruzhan.recyclerviewitemanimation.adapter.OneSlideAdapter;
 import com.ruzhan.recyclerviewitemanimation.adapter.TwoSlideAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,13 +65,12 @@ public class TwoSlideActivity extends AppCompatActivity implements View.OnClickL
   }
 
   private void editItems() {
-    if ("关闭中".equals(mRightTV.getText().toString())) {
-      mRightTV.setText("打开了");
-      mTwoSlideAdapter.openItemAnimation();
-    } else if ("打开了".equals(mRightTV.getText().toString())) {
-      mRightTV.setText("关闭中");
-      mTwoSlideAdapter.closeItemAnimation();
+    if ("CLOSE".equals(mRightTV.getText().toString())) {
+      mRightTV.setText("OPEN");
+      mTwoSlideAdapter.slideOpen();
+    } else if ("OPEN".equals(mRightTV.getText().toString())) {
+      mRightTV.setText("CLOSE");
+      mTwoSlideAdapter.slideClose();
     }
   }
-
 }

@@ -65,13 +65,12 @@ public class OneSlideActivity extends AppCompatActivity implements View.OnClickL
   }
 
   private void editItems() {
-    if ("关闭中".equals(mRightTV.getText().toString())) {
-      mRightTV.setText("打开了");
-      mOneSlideAdapter.openItemAnimation();
-    } else if ("打开了".equals(mRightTV.getText().toString())) {
-      mRightTV.setText("关闭中");
-      mOneSlideAdapter.closeItemAnimation();
+    if ("CLOSE".equals(mRightTV.getText().toString())) {
+      mRightTV.setText("OPEN");
+      mOneSlideAdapter.slideOpen();
+    } else if ("OPEN".equals(mRightTV.getText().toString())) {
+      mRightTV.setText("CLOSE");
+      mOneSlideAdapter.slideClose();
     }
   }
-
 }

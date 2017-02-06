@@ -1,87 +1,73 @@
 package com.ruzhan.recyclerviewitemanimation.holder;
 
-import android.animation.ValueAnimator;
-import android.support.v7.widget.RecyclerView;
+import android.graphics.Color;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.TextView;
 import com.ruzhan.recyclerviewitemanimation.R;
-import com.ruzhan.recyclerviewitemanimation.helper.SlideAnimationHelper;
+import zhan.library.slide.holder.SlideViewHolder;
 
 /**
  * Created by zhan on 2017/2/3.
  */
 
-public class TwoSlideViewHolder extends RecyclerView.ViewHolder {
+public class TwoSlideViewHolder extends SlideViewHolder {
 
-  private static final int DURATION_OPEN = 300;
-  private static final int DURATION_CLOSE = 150;
-
-  private static final int NORMAL_OFFSET = 100;
-
-  private SlideAnimationHelper mSlideAnimationHelper;
-  private OpenUpdateListener mOpenUpdateListener;
-  private CloseUpdateListener mCloseUpdateListener;
-
-  private int mOffset;
+  private View itemRoot;
   private View mContentLl;
+  private TextView itemRedTv;
+  private TextView itemBlueTv;
+  private TextView helloTv;
+
+  private static int mCurrentColor;
+  private float mFraction;
 
   public TwoSlideViewHolder(View itemView) {
     super(itemView);
 
+    itemRoot = itemView.findViewById(R.id.item_root);
     mContentLl = itemView.findViewById(R.id.content_ll);
+    itemRedTv = (TextView) itemView.findViewById(R.id.item_red_tv);
+    itemBlueTv = (TextView) itemView.findViewById(R.id.item_blue_tv);
+    helloTv = (TextView) itemView.findViewById(R.id.hello_tv);
+  }
 
+  @Override public void doAnimationSet(int offset, float fraction) {
+    mContentLl.scrollTo(-offset, 0);
 
-    mOffset = SlideAnimationHelper.getOffset(itemView.getContext(), NORMAL_OFFSET);
-    mSlideAnimationHelper = new SlideAnimationHelper(itemView);
+    mFraction = 1 - fraction;
+
+    itemRedTv.setScaleX(mFraction);
+    itemRedTv.setScaleY(mFraction);
+
+    itemBlueTv.setScaleX(mFraction);
+    itemBlueTv.setScaleY(mFraction);
+
+    helloTv.setScaleX(mFraction);
+    helloTv.setScaleY(mFraction);
+    helloTv.setAlpha(mFraction * 255);
+
+    float blue = 233 * mFraction;
+    mCurrentColor = Color.argb(233, 233 / 2, 233, (int) blue);
+    itemRoot.setBackgroundColor(mCurrentColor);
+  }
+
+  @Override public void onBindSlideClose(int state) {
+    itemRoot.setBackgroundColor(mCurrentColor);
+
+  }
+
+  @Override public void doAnimationSetOpen(int state) {
+    itemRoot.setBackgroundColor(mCurrentColor);
+
+    helloTv.setScaleX(mFraction);
+    helloTv.setScaleY(mFraction);
+    helloTv.setAlpha(mFraction * 255);
   }
 
   public void bind() {
+    setOffset(150);
 
-    //keep refresh one_item is change state
-    switch (mSlideAnimationHelper.getState()) {
-      case SlideAnimationHelper.STATE_CLOSE:
-        mContentLl.scrollTo(0, 0);
-        break;
-
-      case SlideAnimationHelper.STATE_OPEN:
-        mContentLl.scrollTo(mOffset, 0);
-        break;
-    }
-  }
-
-  public void openItemAnimation() {
-    if (mOpenUpdateListener == null) {
-      mOpenUpdateListener = new OpenUpdateListener();
-    }
-    mSlideAnimationHelper.openAnimation(DURATION_OPEN, mOpenUpdateListener);
-  }
-
-  public void closeItemAnimation() {
-    if (mCloseUpdateListener == null) {
-      mCloseUpdateListener = new CloseUpdateListener();
-    }
-    mSlideAnimationHelper.closeAnimation(DURATION_CLOSE, mCloseUpdateListener);
-  }
-
-  private void doAnimationSet(int x, float fraction) {
-    mContentLl.scrollTo(-x, 0);
-  }
-
-  private class OpenUpdateListener implements ValueAnimator.AnimatorUpdateListener {
-
-    @Override public void onAnimationUpdate(ValueAnimator animation) {
-      float fraction = animation.getAnimatedFraction();
-      int endX = (int) (-mOffset * fraction);
-      doAnimationSet(endX, fraction);
-    }
-  }
-
-  private class CloseUpdateListener implements ValueAnimator.AnimatorUpdateListener {
-
-    @Override public void onAnimationUpdate(ValueAnimator animation) {
-      float fraction = animation.getAnimatedFraction();
-      int endX = (int) (-mOffset * (1 - fraction));
-      doAnimationSet(endX, (1 - fraction));
-    }
+    //slide must call
+    onBindSlide(mContentLl);
   }
 }
