@@ -118,6 +118,12 @@ Usage
 	}
 ```
 
+Developed by
+-------
+
+ ruzhan - <a href='javascript:'>ruzhan333@gmail.com</a>
+
+
 License
 -------
 
