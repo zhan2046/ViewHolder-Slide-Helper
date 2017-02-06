@@ -1,172 +1,120 @@
 
-RecyclerView Animation
+ViewHolder-Slide-Helper
 ===============
 
-A grace let recycleriew holder add animation
+A grace recycleriew holder animation library for Android, expend recyclerview holder
 
 
 -----
 
 
-![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item01.gif) 
-![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/item02.gif)
+![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/slide01.gif) 
+![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/slide02.gif)
 
 
 
 
-RecyclerView Animation use **Animation** and **onAnimationUpdate**, let recyclerview holder do animation, **SlideAnimationHelper** control open animation and close animation.
+ViewHolder-Slide-Helper use **Animation** and **Scroller** let holder layout slide, expend recyclerview holder
+
+[![](https://jitpack.io/v/ruzhan123/ViewHolder-Slide-Helper.svg)](https://jitpack.io/#ruzhan123/ViewHolder-Slide-Helper)
+
+Gradle
+------
+
+Add it in your root build.gradle at the end of repositories:
 
 
+```java
+
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+Add the dependency:
+
+
+```java
+
+	dependencies {
+	        compile 'com.github.ruzhan123:ViewHolder-Slide-Helper:v1.0'
+	}
+```
 
 Usage
 -----
 
-1, create holder add to holder list 
+1, recyclerview adapter create ISlideHelper instance
 
 ```java
 
-	private List<OneSlideViewHolder> mOneSlideViewHolders = new ArrayList<>();
+	public class SlideAdapter extends RecyclerView.Adapter {
 	
+	private ISlideHelper mISlideHelper = new ISlideHelper();
+```
+
+2, in onCreateViewHolder, use ISlideHelper add new create holder
+
+```java
+
 	@Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 	
 	OneSlideViewHolder oneSlideViewHolder = new OneSlideViewHolder(
 	    LayoutInflater.from(parent.getContext()).inflate(R.layout.one_item, parent, false));
 	
-	//add holder to list
-	mOneSlideViewHolders.add(oneSlideViewHolder);
+	//add holder
+	mISlideHelper.add(oneSlideViewHolder);
 	
 	return oneSlideViewHolder;
 	}
 ```
 
-2, call open or close animation
+
+3, recyclerview holder need extends SlideViewHolder, in dapter onBindViewHolder call holder onBindSlide method
 
 ```java
 
-	public void openItemAnimation() {
-	for (OneSlideViewHolder holder : mOneSlideViewHolders) {
-	  holder.openItemAnimation();
+	@Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+	((SlideViewHolder) holder).bind();
 	}
-	}
-	
-	public void closeItemAnimation() {
-	for (OneSlideViewHolder holder : mOneSlideViewHolders) {
-	  holder.closeItemAnimation();
-	}
-	}
-```
 
-
-3, in holder
-
-```java
-
-	public void openItemAnimation() {
-	if (mOpenUpdateListener == null) {
-	  mOpenUpdateListener = new OpenUpdateListener();
-	}
-	mSlideAnimationHelper.openAnimation(DURATION_OPEN, mOpenUpdateListener);
-	}
-	
-	public void closeItemAnimation() {
-	if (mCloseUpdateListener == null) {
-	  mCloseUpdateListener = new CloseUpdateListener();
-	}
-	mSlideAnimationHelper.closeAnimation(DURATION_CLOSE, mCloseUpdateListener);
-	}
+	public class OneSlideViewHolder extends SlideViewHolder {
 	
 	public void bind() {
-	//keep refresh one_item is change state
-	switch (mSlideAnimationHelper.getState()) {
-	  case SlideAnimationHelper.STATE_CLOSE:
-	    mContentRl.scrollTo(0, 0);
-	    break;
+	//slide offset
+	setOffset(50);
 	
-	  case SlideAnimationHelper.STATE_OPEN:
-	    mContentRl.scrollTo(-mOffset, 0);
-	    break;
-	}
-	}
-	
-	private void doAnimationSet(int x, float fraction) {
-	mContentRl.scrollTo(x, 0);
-	mCheckBox.setScaleX(fraction);
-	mCheckBox.setScaleY(fraction);
-	mCheckBox.setAlpha(fraction * 255);
-	}
-	
-	private class OpenUpdateListener implements ValueAnimator.AnimatorUpdateListener {
-	
-	@Override public void onAnimationUpdate(ValueAnimator animation) {
-	  float fraction = animation.getAnimatedFraction();
-	  int endX = (int) (-mOffset * fraction);
-	  doAnimationSet(endX, fraction);
-	}
-	}
-	
-	private class CloseUpdateListener implements ValueAnimator.AnimatorUpdateListener {
-	
-	@Override public void onAnimationUpdate(ValueAnimator animation) {
-	  float fraction = animation.getAnimatedFraction();
-	  int endX = (int) (-mOffset * (1 - fraction));
-	  doAnimationSet(endX, (1 - fraction));
+	//slide must call,param is slide view
+	onBindSlide(mContentRl);
 	}
 	}
 ```
 
-
-SlideAnimationHelper
------
+4, expend recyclerview holder, you can add animation set
 
 ```java
 
-	public class SlideAnimationHelper implements View.OnAttachStateChangeListener {
+	@Override public void doAnimationSet(int offset, float fraction) {
+	mContentRl.scrollTo(offset, 0);
 	
-	public static final int STATE_CLOSE = 20000;
-	public static final int STATE_OPEN = 30000;
+	itemTv.setScaleX(fraction);
+	itemTv.setScaleY(fraction);
+	itemTv.setAlpha(fraction * 255);
 	
-	private static int mCurrentState = STATE_CLOSE;
-	
-	private ValueAnimator mValueAnimator;
-	
-	public SlideAnimationHelper(View view) {
-	view.addOnAttachStateChangeListener(this);
-	}
-
-	...
-
-	public ValueAnimator getAnimation() {
-	if (mValueAnimator == null) {
-	  mValueAnimator = new ValueAnimator();
-	  mValueAnimator.setFloatValues(0.0f, 1.0f);
-	}
-	return mValueAnimator;
+	titleLl.scrollTo(offset, 0);
 	}
 	
-	public void openAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-	  Animator.AnimatorListener listener, float... values) {
-	mCurrentState = STATE_OPEN;
-	setValueAnimator(duration, animatorUpdateListener, listener, values);
+	//static bind anmation state
+	@Override public void onBindSlideClose(int state) {
+	titleLl.scrollTo(0, 0);
 	}
 	
-	public void closeAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-	  Animator.AnimatorListener listener, float... values) {
-	mCurrentState = STATE_CLOSE;
-	setValueAnimator(duration, animatorUpdateListener, listener, values);
-	}
-
-	...
-
-	@Override public void onViewAttachedToWindow(View v) {
-	
-	}
-	
-	@Override public void onViewDetachedFromWindow(View v) {
-	
-	//view detach window cancel animation
-	if (mValueAnimator != null) {
-	  mValueAnimator.cancel();
-	}
+	//static bind anmation state
+	@Override public void doAnimationSetOpen(int state) {
+	titleLl.scrollTo(-mOffset, 0);
 	}
 ```
 
