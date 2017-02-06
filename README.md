@@ -2,7 +2,7 @@
 ViewHolder-Slide-Helper
 ===============
 
-A grace recycleriew holder animation library for Android, expend recyclerview holder
+A grace recycleriew holder animation library for Android
 
 
 -----
@@ -14,7 +14,7 @@ A grace recycleriew holder animation library for Android, expend recyclerview ho
 
 
 
-ViewHolder-Slide-Helper use **Animation** and **Scroller** let holder layout slide, expend recyclerview holder
+ViewHolder-Slide-Helper use **Animation** and **Scroller**, expend recyclerview holder
 
 [![](https://jitpack.io/v/ruzhan123/ViewHolder-Slide-Helper.svg)](https://jitpack.io/#ruzhan123/ViewHolder-Slide-Helper)
 
@@ -47,7 +47,7 @@ Add the dependency:
 Usage
 -----
 
-1, recyclerview adapter create ISlideHelper instance
+1, recyclerview adapter create ISlideHelper
 
 ```java
 
@@ -56,7 +56,7 @@ Usage
 	private ISlideHelper mISlideHelper = new ISlideHelper();
 ```
 
-2, in onCreateViewHolder, use ISlideHelper add new create holder
+2, use ISlideHelper add holder
 
 ```java
 
@@ -73,7 +73,7 @@ Usage
 ```
 
 
-3, recyclerview holder need extends SlideViewHolder, in dapter onBindViewHolder call holder onBindSlide method
+3, extends SlideViewHolder, in onBindViewHolder call holder onBindSlide method
 
 ```java
 
@@ -93,7 +93,10 @@ Usage
 	}
 ```
 
-4, expend recyclerview holder, you can add animation set
+expend
+-------
+
+add animation set, if you holder need
 
 ```java
 
