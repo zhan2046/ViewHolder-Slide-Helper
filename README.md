@@ -124,7 +124,7 @@ add animation set, if you holder need
 Developed by
 -------
 
- ruzhan - <a href='javascript:'>ruzhan333@gmail.com</a>
+ ruzhan - <a href='javascript:'>dev19921116@gmail.com</a>
 
 
 License
