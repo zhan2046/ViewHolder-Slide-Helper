@@ -23,6 +23,10 @@ public class SlideAnimationHelper {
         mValueAnimator.setFloatValues(0.0f, 1.0f);
     }
 
+    public ValueAnimator getValueAnimator() {
+        return mValueAnimator;
+    }
+
     public void addAnimatorUpdateListener(AnimatorUpdateListener animatorUpdateListener) {
         mValueAnimator.addUpdateListener(animatorUpdateListener);
     }

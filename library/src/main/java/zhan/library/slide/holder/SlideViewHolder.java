@@ -32,11 +32,18 @@ public abstract class SlideViewHolder extends RecyclerView.ViewHolder
 
     public SlideViewHolder(View itemView) {
         super(itemView);
-        mOffset = SlideAnimationHelper.getOffset(itemView.getContext(),
-                NORMAL_OFFSET);
+        mOffset = SlideAnimationHelper.getOffset(itemView.getContext(), NORMAL_OFFSET);
         itemView.addOnAttachStateChangeListener(this);
         mSlideAnimationHelper.addAnimatorListener(new InAnimatorListener());
         mSlideAnimationHelper.addAnimatorUpdateListener(new InUpdateListener());
+    }
+
+    public void setSlideAnimatorListener(SlideAnimatorListener listener) {
+        this.slideAnimatorListener = listener;
+    }
+
+    public void setSlideAnimatorUpdateListener(SlideAnimatorUpdateListener listener) {
+        this.slideAnimatorUpdateListener = listener;
     }
 
     public void setOffset(int offset) {
@@ -51,20 +58,24 @@ public abstract class SlideViewHolder extends RecyclerView.ViewHolder
         return mSlideAnimationHelper.getState();
     }
 
-    public void setSlideAnimatorListener(SlideAnimatorListener listener) {
-        this.slideAnimatorListener = listener;
-    }
-
-    public void setSlideAnimatorUpdateListener(SlideAnimatorUpdateListener listener) {
-        this.slideAnimatorUpdateListener = listener;
+    public SlideAnimationHelper getmSlideAnimationHelper() {
+        return mSlideAnimationHelper;
     }
 
     public int getOpenDuration() {
         return openDuration;
     }
 
+    public void setOpenDuration(int openDuration) {
+        this.openDuration = openDuration;
+    }
+
     public int getCloseDuration() {
         return closeDuration;
+    }
+
+    public void setCloseDuration(int closeDuration) {
+        this.closeDuration = closeDuration;
     }
 
     //keep change state
