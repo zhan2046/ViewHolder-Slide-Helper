@@ -1,8 +1,14 @@
 package com.ruzhan.recyclerviewitemanimation.holder;
 
+import android.animation.Animator;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
 import com.ruzhan.recyclerviewitemanimation.R;
+
+import zhan.library.slide.SlideAnimatorListener;
+import zhan.library.slide.helper.SlideAnimationHelper;
 import zhan.library.slide.holder.SlideViewHolder;
 
 /**
@@ -11,47 +17,66 @@ import zhan.library.slide.holder.SlideViewHolder;
 
 public class OneSlideViewHolder extends SlideViewHolder {
 
-  private View mContentRl;
-  private TextView itemTv;
+    private static final String TAG = OneSlideViewHolder.class.getSimpleName();
 
-  private View itemIconV;
-  private View titleLl;
-  private TextView itemTitleTv;
-  private TextView itemSubtitleTv;
+    private View mContentRl;
+    private TextView itemTv;
 
-  public OneSlideViewHolder(View itemView) {
-    super(itemView);
+    private View itemIconV;
+    private View titleLl;
+    private TextView itemTitleTv;
+    private TextView itemSubtitleTv;
 
-    mContentRl = itemView.findViewById(R.id.item_content_rl);
-    itemTv = (TextView) itemView.findViewById(R.id.item_tv);
-    itemIconV = itemView.findViewById(R.id.item_icon_v);
-    titleLl = itemView.findViewById(R.id.title_ll);
-    itemTitleTv = (TextView) itemView.findViewById(R.id.item_title_tv);
-    itemSubtitleTv = (TextView) itemView.findViewById(R.id.item_subtitle_tv);
-  }
+    public OneSlideViewHolder(View itemView) {
+        super(itemView);
 
-  @Override public void doAnimationSet(int offset, float fraction) {
-    mContentRl.scrollTo(offset, 0);
+        mContentRl = itemView.findViewById(R.id.item_content_rl);
+        itemTv = (TextView) itemView.findViewById(R.id.item_tv);
+        itemIconV = itemView.findViewById(R.id.item_icon_v);
+        titleLl = itemView.findViewById(R.id.title_ll);
+        itemTitleTv = (TextView) itemView.findViewById(R.id.item_title_tv);
+        itemSubtitleTv = (TextView) itemView.findViewById(R.id.item_subtitle_tv);
 
-    itemTv.setScaleX(fraction);
-    itemTv.setScaleY(fraction);
-    itemTv.setAlpha(fraction * 255);
+        setSlideAnimatorListener(new SlideAnimatorListener() {
+            @Override
+            public void onSlideAnimationStart(Animator animation, int currentStatus) {
+                Log.i(TAG, "setSlideAnimatorListener: onSlideAnimationStart: "
+                        + (currentStatus == SlideAnimationHelper.STATE_OPEN ? "open" : "close"));
+            }
 
-    titleLl.scrollTo(offset, 0);
-  }
+            @Override
+            public void onSlideAnimationEnd(Animator animation, int currentStatus) {
+                Log.i(TAG, "setSlideAnimatorListener: onSlideAnimationEnd: "
+                        + (currentStatus == SlideAnimationHelper.STATE_OPEN ? "open" : "close"));
+            }
+        });
+    }
 
-  @Override public void onBindSlideClose(int state) {
-    titleLl.scrollTo(0, 0);
-  }
+    @Override
+    public void doAnimationSet(int offset, float fraction) {
+        mContentRl.scrollTo(offset, 0);
 
-  @Override public void doAnimationSetOpen(int state) {
-    titleLl.scrollTo(-mOffset, 0);
-  }
+        itemTv.setScaleX(fraction);
+        itemTv.setScaleY(fraction);
+        itemTv.setAlpha(fraction * 255);
 
-  public void bind() {
-    setOffset(50);
+        titleLl.scrollTo(offset, 0);
+    }
 
-    //slide must call
-    onBindSlide(mContentRl);
-  }
+    @Override
+    public void onBindSlideClose(int state) {
+        titleLl.scrollTo(0, 0);
+    }
+
+    @Override
+    public void doAnimationSetOpen(int state) {
+        titleLl.scrollTo(-mOffset, 0);
+    }
+
+    public void bind() {
+        setOffset(50);
+
+        //slide must call
+        onBindSlide(mContentRl);
+    }
 }

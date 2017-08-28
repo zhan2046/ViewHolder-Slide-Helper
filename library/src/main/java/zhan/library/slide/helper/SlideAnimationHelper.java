@@ -11,111 +11,82 @@ import android.content.Context;
 
 public class SlideAnimationHelper {
 
-  public static final int STATE_CLOSE = 20000;
-  public static final int STATE_OPEN = 30000;
+    public static final int STATE_CLOSE = 20000;
+    public static final int STATE_OPEN = 30000;
 
-  private static int mCurrentState = STATE_CLOSE;
+    private static int mCurrentState = STATE_CLOSE;
 
-  private ValueAnimator mValueAnimator;
+    private ValueAnimator mValueAnimator;
 
-  public SlideAnimationHelper() {
-
-  }
-
-  public int getState() {
-    return mCurrentState;
-  }
-
-  public ValueAnimator getAnimation() {
-    if (mValueAnimator == null) {
-      mValueAnimator = new ValueAnimator();
-      mValueAnimator.setFloatValues(0.0f, 1.0f);
+    public SlideAnimationHelper() {
+        mValueAnimator = new ValueAnimator();
+        mValueAnimator.setFloatValues(0.0f, 1.0f);
     }
-    return mValueAnimator;
-  }
 
-  public void openAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-      Animator.AnimatorListener listener, float... values) {
-    mCurrentState = STATE_OPEN;
-    setValueAnimator(duration, animatorUpdateListener, listener, values);
-  }
-
-  public void closeAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-      Animator.AnimatorListener listener, float... values) {
-    mCurrentState = STATE_CLOSE;
-    setValueAnimator(duration, animatorUpdateListener, listener, values);
-  }
-
-  public void openAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-      float... values) {
-    mCurrentState = STATE_OPEN;
-    setValueAnimator(duration, animatorUpdateListener, null, values);
-  }
-
-  public void closeAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-      float... values) {
-    mCurrentState = STATE_CLOSE;
-    setValueAnimator(duration, animatorUpdateListener, null, values);
-  }
-
-  public void openAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-      Animator.AnimatorListener listener) {
-    mCurrentState = STATE_OPEN;
-    setValueAnimator(duration, animatorUpdateListener, listener);
-  }
-
-  public void closeAnimation(long duration, AnimatorUpdateListener animatorUpdateListener,
-      Animator.AnimatorListener listener) {
-    mCurrentState = STATE_CLOSE;
-    setValueAnimator(duration, animatorUpdateListener, listener);
-  }
-
-  public void openAnimation(long duration, AnimatorUpdateListener animatorUpdateListener) {
-    mCurrentState = STATE_OPEN;
-    setValueAnimator(duration, animatorUpdateListener, null);
-  }
-
-  public void closeAnimation(long duration, AnimatorUpdateListener animatorUpdateListener) {
-    mCurrentState = STATE_CLOSE;
-    setValueAnimator(duration, animatorUpdateListener, null);
-  }
-
-  private void setValueAnimator(long duration, AnimatorUpdateListener animatorUpdateListener,
-      Animator.AnimatorListener listener) {
-    mValueAnimator = getAnimation();
-    mValueAnimator.setDuration(duration);
-
-    if (animatorUpdateListener != null) {
-      mValueAnimator.addUpdateListener(animatorUpdateListener);
+    public void addAnimatorUpdateListener(AnimatorUpdateListener animatorUpdateListener) {
+        mValueAnimator.addUpdateListener(animatorUpdateListener);
     }
-    if (listener != null) {
-      mValueAnimator.addListener(listener);
-    }
-    start();
-  }
 
-  private void setValueAnimator(long duration, AnimatorUpdateListener animatorUpdateListener,
-      Animator.AnimatorListener listener, float... values) {
-    mValueAnimator = getAnimation();
-    mValueAnimator.setDuration(duration);
-    mValueAnimator.setFloatValues(values);
-
-    if (animatorUpdateListener != null) {
-      mValueAnimator.addUpdateListener(animatorUpdateListener);
+    public void addAnimatorListener(Animator.AnimatorListener animatorListener) {
+        mValueAnimator.addListener(animatorListener);
     }
-    if (listener != null) {
-      mValueAnimator.addListener(listener);
-    }
-    start();
-  }
 
-  private void start() {
-    if (mValueAnimator != null && !mValueAnimator.isRunning()) {
-      mValueAnimator.start();
+    public int getState() {
+        return mCurrentState;
     }
-  }
 
-  public static int getOffset(Context context, int offset) {
-    return (int) (context.getResources().getDisplayMetrics().density * offset + 0.5f);
-  }
+    public boolean isOpenStatus() {
+        return mCurrentState == STATE_OPEN;
+    }
+
+    public boolean isCloseStatus() {
+        return mCurrentState == STATE_CLOSE;
+    }
+
+    public void openAnimation(long duration, float... values) {
+        mCurrentState = STATE_OPEN;
+        setValueAnimator(duration, values);
+    }
+
+    public void closeAnimation(long duration, float... values) {
+        mCurrentState = STATE_CLOSE;
+        setValueAnimator(duration, values);
+    }
+
+    public void openAnimation(long duration) {
+        mCurrentState = STATE_OPEN;
+        setValueAnimator(duration);
+    }
+
+    public void closeAnimation(long duration) {
+        mCurrentState = STATE_CLOSE;
+        setValueAnimator(duration);
+    }
+
+    private void setValueAnimator(long duration) {
+        mValueAnimator.setDuration(duration);
+        start();
+    }
+
+    private void setValueAnimator(long duration, float... values) {
+        mValueAnimator.setDuration(duration);
+        mValueAnimator.setFloatValues(values);
+        start();
+    }
+
+    private void start() {
+        if (mValueAnimator != null && !mValueAnimator.isRunning()) {
+            mValueAnimator.start();
+        }
+    }
+
+    public void cancel() {
+        if (mValueAnimator != null) {
+            mValueAnimator.cancel();
+        }
+    }
+
+    public static int getOffset(Context context, int offset) {
+        return (int) (context.getResources().getDisplayMetrics().density * offset + 0.5f);
+    }
 }

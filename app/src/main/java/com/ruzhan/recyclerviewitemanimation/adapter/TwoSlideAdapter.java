@@ -3,49 +3,55 @@ package com.ruzhan.recyclerviewitemanimation.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import com.ruzhan.recyclerviewitemanimation.R;
 import com.ruzhan.recyclerviewitemanimation.holder.TwoSlideViewHolder;
-import zhan.library.slide.ISlideHelper;
+
 import java.util.List;
+
+import zhan.library.slide.ISlideHelper;
 
 /**
  * Created by ruzhan on 16/6/30.
  */
 public class TwoSlideAdapter extends RecyclerView.Adapter {
 
-  private List<String> mData;
+    private List<String> mData;
 
-  private ISlideHelper mISlideHelper = new ISlideHelper();
+    private ISlideHelper mISlideHelper = new ISlideHelper();
 
-  public void setData(List<String> data) {
-    mData = data;
-    notifyDataSetChanged();
-  }
+    public void setData(List<String> data) {
+        mData = data;
+        notifyDataSetChanged();
+    }
 
-  public void slideOpen() {
-    mISlideHelper.slideOpen();
-  }
+    public void slideOpen() {
+        mISlideHelper.slideOpen();
+    }
 
-  public void slideClose() {
-    mISlideHelper.slideClose();
-  }
+    public void slideClose() {
+        mISlideHelper.slideClose();
+    }
 
-  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-    TwoSlideViewHolder twoSlideViewHolder = new TwoSlideViewHolder(
-        LayoutInflater.from(parent.getContext()).inflate(R.layout.two_item, parent, false));
+        TwoSlideViewHolder twoSlideViewHolder = new TwoSlideViewHolder(
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.two_item, parent, false));
 
-    //add holder
-    mISlideHelper.add(twoSlideViewHolder);
+        //add holder
+        mISlideHelper.add(twoSlideViewHolder);
 
-    return twoSlideViewHolder;
-  }
+        return twoSlideViewHolder;
+    }
 
-  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    ((TwoSlideViewHolder) holder).bind();
-  }
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ((TwoSlideViewHolder) holder).bind();
+    }
 
-  @Override public int getItemCount() {
-    return mData == null ? 0 : mData.size();
-  }
+    @Override
+    public int getItemCount() {
+        return mData == null ? 0 : mData.size();
+    }
 }

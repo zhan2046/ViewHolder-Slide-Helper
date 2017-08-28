@@ -1,97 +1,183 @@
 package zhan.library.slide.holder;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import zhan.library.slide.helper.SlideAnimationHelper;
+
 import zhan.library.slide.ISlide;
+import zhan.library.slide.SlideAnimatorListener;
+import zhan.library.slide.SlideAnimatorUpdateListener;
+import zhan.library.slide.helper.SlideAnimationHelper;
 
 /**
  * Created by zhan on 2017/2/6.
  */
 
-public abstract class SlideViewHolder extends RecyclerView.ViewHolder implements ISlide {
+public abstract class SlideViewHolder extends RecyclerView.ViewHolder
+        implements ISlide, View.OnAttachStateChangeListener {
 
-  private static final int DURATION_OPEN = 300;
-  private static final int DURATION_CLOSE = 150;
+    private static final int DURATION_OPEN = 300;
+    private static final int DURATION_CLOSE = 150;
+    private static final int NORMAL_OFFSET = 50;
 
-  private static final int NORMAL_OFFSET = 50;
+    private SlideAnimationHelper mSlideAnimationHelper = new SlideAnimationHelper();
 
-  private SlideAnimationHelper mSlideAnimationHelper;
+    private SlideAnimatorListener slideAnimatorListener;
+    private SlideAnimatorUpdateListener slideAnimatorUpdateListener;
 
-  private OpenUpdateListener mOpenUpdateListener;
-  private CloseUpdateListener mCloseUpdateListener;
+    protected int mOffset;
+    private int openDuration = DURATION_OPEN;
+    private int closeDuration = DURATION_CLOSE;
 
-  protected int mOffset;
-
-  public SlideViewHolder(View itemView) {
-    super(itemView);
-    mOffset = SlideAnimationHelper.getOffset(itemView.getContext(), NORMAL_OFFSET);
-    mSlideAnimationHelper = new SlideAnimationHelper();
-  }
-
-  public void setOffset(int offset) {
-    mOffset = SlideAnimationHelper.getOffset(itemView.getContext(), offset);
-  }
-
-  public int getOffset() {
-    return mOffset;
-  }
-
-  //keep change state
-  public void onBindSlide(View targetView) {
-    switch (mSlideAnimationHelper.getState()) {
-      case SlideAnimationHelper.STATE_CLOSE:
-        targetView.scrollTo(0, 0);
-        onBindSlideClose(SlideAnimationHelper.STATE_CLOSE);
-        break;
-
-      case SlideAnimationHelper.STATE_OPEN:
-        targetView.scrollTo(-mOffset, 0);
-        doAnimationSetOpen(SlideAnimationHelper.STATE_OPEN);
-        break;
+    public SlideViewHolder(View itemView) {
+        super(itemView);
+        mOffset = SlideAnimationHelper.getOffset(itemView.getContext(),
+                NORMAL_OFFSET);
+        itemView.addOnAttachStateChangeListener(this);
+        mSlideAnimationHelper.addAnimatorListener(new InAnimatorListener());
+        mSlideAnimationHelper.addAnimatorUpdateListener(new InUpdateListener());
     }
-  }
 
-  @Override public void slideOpen() {
-    if (mOpenUpdateListener == null) {
-      mOpenUpdateListener = new OpenUpdateListener();
+    public void setOffset(int offset) {
+        mOffset = SlideAnimationHelper.getOffset(itemView.getContext(), offset);
     }
-    mSlideAnimationHelper.openAnimation(DURATION_OPEN, mOpenUpdateListener);
-  }
 
-  @Override public void slideClose() {
-    if (mCloseUpdateListener == null) {
-      mCloseUpdateListener = new CloseUpdateListener();
+    public int getOffset() {
+        return mOffset;
     }
-    mSlideAnimationHelper.closeAnimation(DURATION_CLOSE, mCloseUpdateListener);
-  }
 
-  public abstract void doAnimationSet(int offset, float fraction);
-
-  public abstract void onBindSlideClose(int state);
-
-  public abstract void doAnimationSetOpen(int state);
-
-
-  private class OpenUpdateListener implements ValueAnimator.AnimatorUpdateListener {
-
-    @Override public void onAnimationUpdate(ValueAnimator animation) {
-      float fraction = animation.getAnimatedFraction();
-      int endX = (int) (-mOffset * fraction);
-
-      doAnimationSet(endX, fraction);
+    public int getState() {
+        return mSlideAnimationHelper.getState();
     }
-  }
 
-  private class CloseUpdateListener implements ValueAnimator.AnimatorUpdateListener {
-
-    @Override public void onAnimationUpdate(ValueAnimator animation) {
-      float fraction = animation.getAnimatedFraction();
-      fraction = 1.0f - fraction;
-      int endX = (int) (-mOffset * fraction);
-
-      doAnimationSet(endX, fraction);
+    public void setSlideAnimatorListener(SlideAnimatorListener listener) {
+        this.slideAnimatorListener = listener;
     }
-  }
+
+    public void setSlideAnimatorUpdateListener(SlideAnimatorUpdateListener listener) {
+        this.slideAnimatorUpdateListener = listener;
+    }
+
+    public int getOpenDuration() {
+        return openDuration;
+    }
+
+    public int getCloseDuration() {
+        return closeDuration;
+    }
+
+    //keep change state
+    public void onBindSlide(View targetView) {
+        switch (mSlideAnimationHelper.getState()) {
+            case SlideAnimationHelper.STATE_CLOSE:
+                targetView.scrollTo(0, 0);
+                onBindSlideClose(SlideAnimationHelper.STATE_CLOSE);
+                break;
+
+            case SlideAnimationHelper.STATE_OPEN:
+                targetView.scrollTo(-mOffset, 0);
+                doAnimationSetOpen(SlideAnimationHelper.STATE_OPEN);
+                break;
+        }
+    }
+
+    @Override
+    public void slideOpen() {
+        mSlideAnimationHelper.openAnimation(openDuration);
+    }
+
+    @Override
+    public void slideClose() {
+        mSlideAnimationHelper.closeAnimation(closeDuration);
+    }
+
+    public void doAnimationSet(int offset, float fraction) {
+        //empty
+    }
+
+    public void onBindSlideClose(int state) {
+        //empty
+    }
+
+    public void doAnimationSetOpen(int state) {
+        //empty
+    }
+
+    @Override
+    public void onViewAttachedToWindow(View v) {
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(View v) {
+        mSlideAnimationHelper.cancel();
+    }
+
+    protected void handlerOpenAnimationUpdate(ValueAnimator animation) {
+        float fraction = animation.getAnimatedFraction();
+        int endX = (int) (-mOffset * fraction);
+        doAnimationSet(endX, fraction);
+    }
+
+    protected void handlerCloseAnimationUpdate(ValueAnimator animation) {
+        float fraction = animation.getAnimatedFraction();
+        fraction = 1.0f - fraction;
+        int endX = (int) (-mOffset * fraction);
+        doAnimationSet(endX, fraction);
+    }
+
+    private class InUpdateListener implements ValueAnimator.AnimatorUpdateListener {
+
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            if (mSlideAnimationHelper.isOpenStatus()) {
+                handlerOpenAnimationUpdate(animation);
+
+            } else {
+                handlerCloseAnimationUpdate(animation);
+            }
+
+            if (slideAnimatorUpdateListener != null) {
+                slideAnimatorUpdateListener.onAnimationUpdate(animation);
+                slideAnimatorUpdateListener.onSlideAnimationUpdate(animation,
+                        mSlideAnimationHelper.getState());
+            }
+        }
+    }
+
+    private class InAnimatorListener implements Animator.AnimatorListener {
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+            if (slideAnimatorListener != null) {
+                slideAnimatorListener.onAnimationStart(animation);
+                slideAnimatorListener.onSlideAnimationStart(animation,
+                        mSlideAnimationHelper.getState());
+            }
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            if (slideAnimatorListener != null) {
+                slideAnimatorListener.onAnimationEnd(animation);
+                slideAnimatorListener.onSlideAnimationEnd(animation,
+                        mSlideAnimationHelper.getState());
+            }
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+            if (slideAnimatorListener != null) {
+                slideAnimatorListener.onAnimationCancel(animation);
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+            if (slideAnimatorListener != null) {
+                slideAnimatorListener.onAnimationRepeat(animation);
+            }
+        }
+    }
 }

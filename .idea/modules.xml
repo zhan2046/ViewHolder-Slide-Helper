@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RecyclerViewItemAnimation.iml" filepath="$PROJECT_DIR$/RecyclerViewItemAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ViewHolder-Slide-Helper.iml" filepath="$PROJECT_DIR$/ViewHolder-Slide-Helper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
   </component>
