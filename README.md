@@ -40,7 +40,7 @@ Add the dependency:
 ```java
 
 	dependencies {
-	        compile 'com.github.ruzhan123:ViewHolder-Slide-Helper:v1.2'
+	        compile 'com.github.ruzhan123:ViewHolder-Slide-Helper:v1.3'
 	}
 ```
 
