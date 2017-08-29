@@ -14,8 +14,7 @@ import zhan.library.slide.helper.SlideAnimationHelper;
  * Created by zhan on 2017/2/6.
  */
 
-public abstract class SlideViewHolder extends RecyclerView.ViewHolder
-        implements ISlide, View.OnAttachStateChangeListener {
+public abstract class SlideViewHolder extends RecyclerView.ViewHolder implements ISlide {
 
     private static final int DURATION_OPEN = 300;
     private static final int DURATION_CLOSE = 150;
@@ -33,7 +32,6 @@ public abstract class SlideViewHolder extends RecyclerView.ViewHolder
     public SlideViewHolder(View itemView) {
         super(itemView);
         mOffset = SlideAnimationHelper.getOffset(itemView.getContext(), NORMAL_OFFSET);
-        itemView.addOnAttachStateChangeListener(this);
         mSlideAnimationHelper.addAnimatorListener(new InAnimatorListener());
         mSlideAnimationHelper.addAnimatorUpdateListener(new InUpdateListener());
     }
@@ -115,13 +113,7 @@ public abstract class SlideViewHolder extends RecyclerView.ViewHolder
         //empty
     }
 
-    @Override
-    public void onViewAttachedToWindow(View v) {
-
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(View v) {
+    public void cancel() {
         mSlideAnimationHelper.cancel();
     }
 
