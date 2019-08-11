@@ -1,8 +1,10 @@
 package com.ruzhan.recyclerviewitemanimation.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ruzhan.recyclerviewitemanimation.R;
 import com.ruzhan.recyclerviewitemanimation.holder.TwoSlideViewHolder;
@@ -11,9 +13,7 @@ import java.util.List;
 
 import zhan.library.slide.ISlideHelper;
 
-/**
- * Created by ruzhan on 16/6/30.
- */
+
 public class TwoSlideAdapter extends RecyclerView.Adapter {
 
     private List<String> mData;
@@ -33,9 +33,9 @@ public class TwoSlideAdapter extends RecyclerView.Adapter {
         mISlideHelper.slideClose();
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         TwoSlideViewHolder twoSlideViewHolder = new TwoSlideViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.two_item, parent, false));
 
@@ -46,7 +46,7 @@ public class TwoSlideAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TwoSlideViewHolder) holder).bind();
     }
 

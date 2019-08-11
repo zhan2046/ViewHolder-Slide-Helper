@@ -5,10 +5,6 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 
-/**
- * Created by zhan on 2017/2/3.
- */
-
 public class SlideAnimationHelper {
 
     public static final int STATE_CLOSE = 20000;

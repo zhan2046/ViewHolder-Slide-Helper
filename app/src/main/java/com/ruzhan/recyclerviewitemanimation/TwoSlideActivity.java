@@ -1,20 +1,18 @@
 package com.ruzhan.recyclerviewitemanimation;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ruzhan.recyclerviewitemanimation.adapter.TwoSlideAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by zhan on 2017/2/3.
- */
 
 public class TwoSlideActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,8 +53,8 @@ public class TwoSlideActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.rcv_root);
-        mRightTV = (TextView) findViewById(R.id.right_tv);
+        mRecyclerView = findViewById(R.id.rcv_root);
+        mRightTV = findViewById(R.id.right_tv);
     }
 
     @Override

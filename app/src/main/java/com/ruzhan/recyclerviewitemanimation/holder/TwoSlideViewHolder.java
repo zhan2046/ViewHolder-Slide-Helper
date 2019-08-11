@@ -8,10 +8,6 @@ import com.ruzhan.recyclerviewitemanimation.R;
 
 import zhan.library.slide.holder.SlideViewHolder;
 
-/**
- * Created by zhan on 2017/2/3.
- */
-
 public class TwoSlideViewHolder extends SlideViewHolder {
 
     private View itemRoot;

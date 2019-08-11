@@ -11,9 +11,6 @@ import zhan.library.slide.SlideAnimatorListener;
 import zhan.library.slide.helper.SlideAnimationHelper;
 import zhan.library.slide.holder.SlideViewHolder;
 
-/**
- * Created by zhan on 2017/2/3.
- */
 
 public class OneSlideViewHolder extends SlideViewHolder {
 

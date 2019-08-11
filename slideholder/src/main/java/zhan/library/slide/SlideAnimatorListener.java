@@ -2,10 +2,6 @@ package zhan.library.slide;
 
 import android.animation.Animator;
 
-/**
- * Copyright ©2017 by Teambition
- */
-
 public abstract class SlideAnimatorListener implements Animator.AnimatorListener {
 
     @Override

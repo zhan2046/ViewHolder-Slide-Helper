@@ -2,17 +2,15 @@ package zhan.library.slide.holder;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import zhan.library.slide.ISlide;
 import zhan.library.slide.SlideAnimatorListener;
 import zhan.library.slide.SlideAnimatorUpdateListener;
 import zhan.library.slide.helper.SlideAnimationHelper;
 
-/**
- * Created by zhan on 2017/2/6.
- */
 
 public abstract class SlideViewHolder extends RecyclerView.ViewHolder implements ISlide {
 

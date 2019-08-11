@@ -3,10 +3,6 @@ package zhan.library.slide;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by zhan on 2017/2/6.
- */
-
 public class ISlideHelper {
 
     private List<ISlide> mISlides = new ArrayList<>();
