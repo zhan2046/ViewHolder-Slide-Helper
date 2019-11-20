@@ -20,8 +20,8 @@ abstract class SlideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     private var slideAnimatorUpdateListener: SlideAnimatorUpdateListener? = null
 
     protected var mOffset: Int = 0
-    var openDuration = DURATION_OPEN
-    var closeDuration = DURATION_CLOSE
+    private var openDuration = DURATION_OPEN
+    private var closeDuration = DURATION_CLOSE
 
     var offset: Int
         get() = mOffset
@@ -153,8 +153,8 @@ abstract class SlideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
 
     companion object {
 
-        private val DURATION_OPEN = 300
-        private val DURATION_CLOSE = 150
-        private val NORMAL_OFFSET = 50
+        private const val DURATION_OPEN = 300
+        private const val DURATION_CLOSE = 150
+        private const val NORMAL_OFFSET = 50
     }
 }

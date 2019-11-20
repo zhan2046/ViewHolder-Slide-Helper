@@ -7,7 +7,7 @@ import android.content.Context
 
 class SlideAnimationHelper {
 
-    val valueAnimator: ValueAnimator?
+    private val valueAnimator: ValueAnimator?
 
     val state: Int
         get() = mCurrentState
@@ -20,7 +20,7 @@ class SlideAnimationHelper {
 
     init {
         valueAnimator = ValueAnimator()
-        valueAnimator!!.setFloatValues(0.0f, 1.0f)
+        valueAnimator.setFloatValues(0.0f, 1.0f)
     }
 
     fun addAnimatorUpdateListener(animatorUpdateListener: AnimatorUpdateListener) {
@@ -74,8 +74,8 @@ class SlideAnimationHelper {
 
     companion object {
 
-        val STATE_CLOSE = 20000
-        val STATE_OPEN = 30000
+        const val STATE_CLOSE = 20000
+        const val STATE_OPEN = 30000
 
         private var mCurrentState = STATE_CLOSE
 
