@@ -7,11 +7,8 @@ A grace recycleriew holder animation library for Android
 
 -----
 
-
-![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/slide01.gif) 
-![](https://github.com/ruzhan123/RecyclerViewItemAnimation/raw/master/gif/slide02.gif)
-
-
+<a href="gif/slide01.gif"><img src="gif/slide01.gif" width="50%"/></a>
+<a href="gif/slide02.gif"><img src="gif/slide02.gif" width="50%"/></a>
 
 
 ViewHolder-Slide-Helper use **Animation** and **Scroller**, expend recyclerview holder
@@ -69,55 +66,6 @@ Usage
 	mISlideHelper.add(oneSlideViewHolder);
 	
 	return oneSlideViewHolder;
-	}
-```
-
-
-3, extends SlideViewHolder, in onBindViewHolder call holder onBindSlide method
-
-```java
-
-	@Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-	((SlideViewHolder) holder).bind();
-	}
-
-	public class OneSlideViewHolder extends SlideViewHolder {
-	
-	public void bind() {
-	//slide offset
-	setOffset(50);
-	
-	//slide must call,param is slide view
-	onBindSlide(mContentRl);
-	}
-	}
-```
-
-expend
--------
-
-add animation set, if you holder need
-
-```java
-
-	@Override public void doAnimationSet(int offset, float fraction) {
-	mContentRl.scrollTo(offset, 0);
-	
-	itemTv.setScaleX(fraction);
-	itemTv.setScaleY(fraction);
-	itemTv.setAlpha(fraction * 255);
-	
-	titleLl.scrollTo(offset, 0);
-	}
-	
-	//static bind anmation state
-	@Override public void onBindSlideClose(int state) {
-	titleLl.scrollTo(0, 0);
-	}
-	
-	//static bind anmation state
-	@Override public void doAnimationSetOpen(int state) {
-	titleLl.scrollTo(-mOffset, 0);
 	}
 ```
 
