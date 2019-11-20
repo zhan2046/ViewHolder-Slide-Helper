@@ -48,25 +48,22 @@ Usage
 
 ```java
 
-	public class SlideAdapter extends RecyclerView.Adapter {
-	
-	private ISlideHelper mISlideHelper = new ISlideHelper();
+public class SlideAdapter extends RecyclerView.Adapter {
+private ISlideHelper mISlideHelper = new ISlideHelper();
 ```
 
 2, use ISlideHelper add holder
 
 ```java
 
-	@Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-	
-	OneSlideViewHolder oneSlideViewHolder = new OneSlideViewHolder(
-	    LayoutInflater.from(parent.getContext()).inflate(R.layout.one_item, parent, false));
-	
-	//add holder
-	mISlideHelper.add(oneSlideViewHolder);
-	
-	return oneSlideViewHolder;
-	}
+@Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+OneSlideViewHolder oneSlideViewHolder = new OneSlideViewHolder(
+	LayoutInflater.from(parent.getContext()).inflate(R.layout.one_item, parent, false));
+//add holder
+mISlideHelper.add(oneSlideViewHolder);
+return oneSlideViewHolder;
+}
 ```
 
 Developed by
