@@ -5,8 +5,8 @@ ViewHolder-Slide-Helper
 A grace recycleriew holder animation library for Android
 
 
+Screenshots
 -----
-
 <a href="gif/slide01.gif"><img src="gif/slide01.gif" width="40%"/></a>
 <a href="gif/slide02.gif"><img src="gif/slide02.gif" width="40%"/></a>
 
