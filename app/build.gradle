@@ -28,7 +28,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
     implementation "androidx.appcompat:appcompat:${versions.supportLibrary}"
     implementation "com.google.android.material:material:${versions.supportLibrary}"

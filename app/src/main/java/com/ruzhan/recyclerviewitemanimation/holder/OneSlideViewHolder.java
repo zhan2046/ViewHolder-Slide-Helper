@@ -67,7 +67,7 @@ public class OneSlideViewHolder extends SlideViewHolder {
 
     @Override
     public void doAnimationSetOpen(int state) {
-        titleLl.scrollTo(-mOffset, 0);
+        titleLl.scrollTo(-getMOffset(), 0);
     }
 
     public void bind() {
