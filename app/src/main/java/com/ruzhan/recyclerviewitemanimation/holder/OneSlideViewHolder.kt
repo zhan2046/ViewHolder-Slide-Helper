@@ -3,10 +3,7 @@ package com.ruzhan.recyclerviewitemanimation.holder
 import android.animation.Animator
 import android.util.Log
 import android.view.View
-import android.widget.TextView
-
-import com.ruzhan.recyclerviewitemanimation.R
-
+import kotlinx.android.synthetic.main.one_item.view.*
 import zhan.library.slide.SlideAnimatorListener
 import zhan.library.slide.helper.SlideAnimationHelper
 import zhan.library.slide.holder.SlideViewHolder
@@ -14,16 +11,12 @@ import zhan.library.slide.holder.SlideViewHolder
 
 class OneSlideViewHolder(itemView: View) : SlideViewHolder(itemView) {
 
-    private val mContentRl: View = itemView.findViewById(R.id.item_content_rl)
-    private val itemTv: TextView = itemView.findViewById<View>(R.id.item_tv) as TextView
-
-    private val itemIconV: View = itemView.findViewById(R.id.item_icon_v)
-    private val titleLl: View = itemView.findViewById(R.id.title_ll)
-    private val itemTitleTv: TextView = itemView.findViewById<View>(R.id.item_title_tv) as TextView
-    private val itemSubtitleTv: TextView = itemView.findViewById<View>(R.id.item_subtitle_tv) as TextView
+    companion object {
+        private const val TAG = "OneSlideViewHolder"
+        private const val DEFAULT_OFFSET = 50
+    }
 
     init {
-
         setSlideAnimatorListener(object : SlideAnimatorListener() {
             override fun onSlideAnimationStart(animation: Animator, currentStatus: Int) {
                 Log.i(TAG, "setSlideAnimatorListener: onSlideAnimationStart: " +
@@ -38,31 +31,25 @@ class OneSlideViewHolder(itemView: View) : SlideViewHolder(itemView) {
     }
 
     override fun doAnimationSet(offset: Int, fraction: Float) {
-        mContentRl.scrollTo(offset, 0)
+        itemView.item_content_rl.scrollTo(offset, 0)
 
-        itemTv.scaleX = fraction
-        itemTv.scaleY = fraction
-        itemTv.alpha = fraction * 255
-
-        titleLl.scrollTo(offset, 0)
+        itemView.item_tv.scaleX = fraction
+        itemView.item_tv.scaleY = fraction
+        itemView.item_tv.alpha = fraction * 255
+        itemView.title_ll.scrollTo(offset, 0)
     }
 
     override fun onBindSlideClose(state: Int) {
-        titleLl.scrollTo(0, 0)
+        itemView.title_ll.scrollTo(0, 0)
     }
 
     override fun doAnimationSetOpen(state: Int) {
-        titleLl.scrollTo(-mOffset, 0)
+        itemView.title_ll.scrollTo(-mOffset, 0)
     }
 
     fun bind() {
-        offset = 50
+        offset = DEFAULT_OFFSET
         //slide must call
-        onBindSlide(mContentRl)
-    }
-
-    companion object {
-
-        private const val TAG = "OneSlideViewHolder"
+        onBindSlide(itemView.item_content_rl)
     }
 }

@@ -12,31 +12,32 @@ import zhan.library.slide.ISlideHelper
 
 class OneSlideAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var mData: List<String>? = null
+    companion object {
+        private const val MAX_INDEX = 77
+    }
 
-    private val mISlideHelper = ISlideHelper()
+    private var dataList = ArrayList<String>()
+    private val iSlideHelper = ISlideHelper()
 
-    fun setData(data: List<String>) {
-        mData = data
-        notifyDataSetChanged()
+    init {
+        for (x in 0..MAX_INDEX) {
+            dataList.add(x.toString())
+        }
     }
 
     fun slideOpen() {
-        mISlideHelper.slideOpen()
+        iSlideHelper.slideOpen()
     }
 
     fun slideClose() {
-        mISlideHelper.slideClose()
+        iSlideHelper.slideClose()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        val oneSlideViewHolder = OneSlideViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.one_item, parent, false))
-
+        val oneSlideViewHolder = OneSlideViewHolder(LayoutInflater.from(parent.context)
+                .inflate(R.layout.one_item, parent, false))
         //add holder
-        mISlideHelper.add(oneSlideViewHolder)
-
+        iSlideHelper.add(oneSlideViewHolder)
         return oneSlideViewHolder
     }
 
@@ -45,6 +46,6 @@ class OneSlideAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return if (mData == null) 0 else mData!!.size
+        return dataList.size
     }
 }

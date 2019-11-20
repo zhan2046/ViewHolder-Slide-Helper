@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
     }
 
-
     fun slide01(view: View) {
         val intent = Intent(this, OneSlideActivity::class.java)
         startActivity(intent)
